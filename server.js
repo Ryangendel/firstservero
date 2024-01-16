@@ -3,19 +3,20 @@ const app = express()
 require('dotenv').config()
 const PORT = process.env.PORT || 65355
 var bodyParser = require('body-parser')
+const path = require('path')
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }))
-
 // parse application/json
 app.use(bodyParser.json())
+app.use(express.static('public'))
 
 
 var bikes_db = [
-    {bike_brand:"Santa Cruz", bike_name:"5010", price:"200", id:123},
-    {bike_brand:"Pivot", bike_name:"Mach6", price:"300", id:234},
-    {bike_brand:"Specialized", bike_name:"Stumpjumper", price:"400", id:345},
-    {bike_brand:"Santa Cruz", bike_name:"hightower", price:"500", id:456},
+    {bike_brand:"Santa Cruz", bike_name:"5010", price:"200",color:"gray", id:123},
+    {bike_brand:"Pivot", bike_name:"Mach6", price:"300",color:"green", id:234},
+    {bike_brand:"Specialized", bike_name:"Stumpjumper", price:"400",color:"red",  id:345},
+    {bike_brand:"Santa Cruz", bike_name:"hightower", color:"blue", price:"500", id:456},
 ]
 
 //RESTful
@@ -30,7 +31,7 @@ function middleware(req, res, next){
     next()
 }
 
-app.use(express.static('build'))
+app.use(express.static('public'))
 // app.use(middleware)
 
 //CRUD
@@ -54,18 +55,36 @@ app.post("/bikeaction", middleware, (req, res)=>{
     console.log(req.body)
     //database logic
     bikes_db.push(req.body)
-    res.send("recieved")
+    res.send("received")
 })
 
-app.put("/bikeaction", middleware, (req, res)=>{
-    console.log(req.body)
+
+app.put("/bikeaction/:id", (req, res)=>{
     //database logic
-    bikes_db.push(req.body)
-    res.send("recieved")
+    console.log(req.query)
+    bikes_db.forEach((bike)=>{
+        if(bike.id===parseInt(req.params.id)){
+            bike.color=req.body.color
+        }
+    })
+    res.send("received")
+})
+
+
+app.put("/bikeaction", (req, res)=>{
+    //database logic
+    console.log(req.query)
+    bikes_db.forEach((bike)=>{
+        if(bike.id===parseInt(req.params.id)){
+            bike.color=req.body.color
+        }
+    })
+    res.send("received")
 })
 
 app.delete("/bikeaction/:id", middleware, (req, res)=>{
     console.log(req.params.id)
+    console.log(typeof req.params.id)
     //database logic
     var deleteIndex = null
     for (let i = 0; i < bikes_db.length; i++) {
@@ -76,7 +95,7 @@ app.delete("/bikeaction/:id", middleware, (req, res)=>{
 
       bikes_db.splice(deleteIndex, 1)
 
-    res.send("recieved")
+    res.send("received")
 })
 
 
@@ -86,6 +105,12 @@ app.get("/specificbike/:id", middleware, (req,res)=>{
     // res.sendFile("index.html")
 })
 
+
+app.get("/homepage", middleware, (req,res)=>{
+   
+   res.sendFile(path.join(__dirname, './public', 'index.html'))
+    // res.sendFile("index.html")
+})
 
 app.get("/addbike", middleware, (req,res)=>{
     res.send("Hello from add bike")
@@ -108,7 +133,7 @@ app.get("/bikes/:bikeid",(req,res)=>{
 //GraphQL
 
 
-// console.log(process.env.S3_BUCKET)
+
 
 app.listen(PORT, ()=>{
     console.log("listening on port " + PORT)
