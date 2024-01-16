@@ -9,12 +9,13 @@ const path = require('path')
 app.use(bodyParser.urlencoded({ extended: true }))
 // parse application/json
 app.use(bodyParser.json())
+
 app.use(express.static('public'))
 
 
 var bikes_db = [
-    {bike_brand:"Santa Cruz", bike_name:"5010", price:"200",color:"gray", id:123},
-    {bike_brand:"Pivot", bike_name:"Mach6", price:"300",color:"green", id:234},
+    {bike_brand:"Santa Cruz", bike_name:"5010", price:"200",color:"gray", id:123, img:"https://cdn.pixabay.com/photo/2013/03/19/18/23/mountain-biking-95032_1280.jpg"},
+    {bike_brand:"Pivot", bike_name:"Mach6", price:"300",color:"green", id:234, img:"https://cdn.outsideonline.com/wp-content/uploads/2023/05/mtb-accessories-sgg23_s.jpg"},
     {bike_brand:"Specialized", bike_name:"Stumpjumper", price:"400",color:"red",  id:345},
     {bike_brand:"Santa Cruz", bike_name:"hightower", color:"blue", price:"500", id:456},
 ]
@@ -31,7 +32,7 @@ function middleware(req, res, next){
     next()
 }
 
-app.use(express.static('public'))
+
 // app.use(middleware)
 
 //CRUD
@@ -107,9 +108,7 @@ app.get("/specificbike/:id", middleware, (req,res)=>{
 
 
 app.get("/homepage", middleware, (req,res)=>{
-   
    res.sendFile(path.join(__dirname, './public', 'index.html'))
-    // res.sendFile("index.html")
 })
 
 app.get("/addbike", middleware, (req,res)=>{
