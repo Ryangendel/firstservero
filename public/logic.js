@@ -1,10 +1,13 @@
 
+window.addEventListener("load", (event) => {
+    document.getElementById("testing").innerHTML = "helllo"
+  });
 
+
+  
 fetch("/getallbikes")
   .then(data=>data.json())
   .then(function (cleanedData){
-      console.log(cleanedData[0].bike_brand)
-  
       cleanedData.forEach(bike=>{
           if(bike.bike_brand==="Pivot"){
           document.getElementById("bikebrand").innerHTML = bike.bike_brand
