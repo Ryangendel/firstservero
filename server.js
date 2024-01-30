@@ -17,9 +17,7 @@ const db = client.db(dbName);
 
 const collection = db.collection('documents');
 // Database Name
-console.log("-------")
-console.log(process.env.MONGO_URI)
-console.log("-------")
+
 client.connect();
 
 async function main() {
@@ -220,7 +218,7 @@ app.put("/bikeaction", (req, res)=>{
     res.send("received")
 })
 
-app.patch("/bikeaction/:id", middleware, (req, res)=>{
+app.patch("/bikeaction/:id", (req, res)=>{
     console.log(req.params.id)
     console.log(typeof req.params.id)
     //database logic
@@ -237,7 +235,7 @@ app.patch("/bikeaction/:id", middleware, (req, res)=>{
 })
 
 
-app.delete("/bikeaction/:id", middleware, (req, res)=>{
+app.delete("/bikeaction/:id", (req, res)=>{
     console.log(req.params.id)
     console.log(typeof req.params.id)
     //database logic
@@ -254,18 +252,18 @@ app.delete("/bikeaction/:id", middleware, (req, res)=>{
 })
 
 
-app.get("/specificbike/:id", middleware, (req,res)=>{
+app.get("/specificbike/:id", (req,res)=>{
     const result = data.filter((x) => x.id !== 123);
     res.send("Hello from add bike")
     // res.sendFile("index.html")
 })
 
 
-app.get("/homepage", middleware, (req,res)=>{
+app.get("/homepage", (req,res)=>{
    res.sendFile(path.join(__dirname, './public', 'index.html'))
 })
 
-app.get("/addbike", middleware, (req,res)=>{
+app.get("/addbike", (req,res)=>{
     res.send("Hello from add bike")
     // res.sendFile("index.html")
 })
