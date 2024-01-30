@@ -17,8 +17,9 @@ const db = client.db(dbName);
 
 const collection = db.collection('documents');
 // Database Name
-
-
+console.log("-------")
+console.log(process.env.MONGO_URI)
+console.log("-------")
 client.connect();
 
 async function main() {
@@ -47,7 +48,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 // parse application/json
 app.use(bodyParser.json())
 
-app.use(express.static('public'))
+app.use(express.static('build'))
 
 
 var bikes_db = [
@@ -64,8 +65,8 @@ var bikes_db = [
 
 //collections
 //=>{name:"runa"}, {dogname:"runa"}
-function middleware(req, res, next){
-    console.log("this is inside the server middleware")
+function getUserInfo(req, res, next){
+    console.log("make a request to Firebase Auth")
     next()
 }
 
@@ -78,6 +79,27 @@ function middleware(req, res, next){
 //Update = PUT
 //Delete = DELETE 
 //I/O
+//const temp = []
+//for res==data.rest
+//temp.push(res[i])
+app.get("/home", async (req,res)=>{
+    res.send("working")
+})
+
+app.get("/getrest", getUserInfo,  async (req,res)=>{
+    console.log("make a request to Firebase Auth")
+    res.json(data)
+})
+
+app.get("/logout", getUserInfo,  async (req,res)=>{
+    console.log("make a request to Firebase Auth")
+    res.json(data)
+})
+
+app.get("/login", getUserInfo,  async (req,res)=>{
+    //Logic to login
+    res.json(data)
+})
 
 app.get("/insertdogs/:owner/:dog1/:dog2/:dog3", middleware, async (req,res)=>{
     var name1 = req.params.dog1

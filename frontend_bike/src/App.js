@@ -1,11 +1,12 @@
 import logo from './logo.svg';
-import {useEffect} from "react"
+import {useEffect, useState} from "react"
 import './App.css';
 
 function App() {
+  const rest = useState()
   useEffect(()=>{
     console.log("%%%%%%%%")
-    fetch("/getallbikes")
+    fetch("www.randomstringoftext.aws.com/maindata")
     .then(data=>data.json())
     .then(cleanedData=>{
       console.log("------------")
@@ -26,6 +27,7 @@ console.log("insdie button")
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
+        <img src={rest.url}></img>
         <a
           className="App-link"
           href="https://reactjs.org"
