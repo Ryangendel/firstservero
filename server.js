@@ -99,7 +99,7 @@ app.get("/login", getUserInfo,  async (req,res)=>{
     res.json(data)
 })
 
-app.get("/insertdogs/:owner/:dog1/:dog2/:dog3", middleware, async (req,res)=>{
+app.get("/insertdogs/:owner/:dog1/:dog2/:dog3", async (req,res)=>{
     var name1 = req.params.dog1
     var name2 = req.params.dog2
     var name3 = req.params.dog3
@@ -120,7 +120,7 @@ app.get("/insertdogs/:owner/:dog1/:dog2/:dog3", middleware, async (req,res)=>{
     // res.sendFile("index.html")
 })
 
-app.post("/insertdogs", middleware, async (req,res)=>{
+app.post("/insertdogs", async (req,res)=>{
     var owner = req.body.owner
     var name1 = req.body.dog1
     var name2 = req.body.dog2
@@ -147,7 +147,7 @@ app.post("/insertdogs", middleware, async (req,res)=>{
 })
 
 
-app.put("/updatedogs/:ownername", middleware, async (req,res)=>{
+app.put("/updatedogs/:ownername", async (req,res)=>{
     console.log(req.params.ownername)
     console.log(req.body)
     const insertResult = collection.updateOne({ owner: req.params.ownername }, { $push: { dogs: req.body.newdog } } ) 
@@ -155,17 +155,17 @@ app.put("/updatedogs/:ownername", middleware, async (req,res)=>{
     // res.sendFile("index.html")
 })
 
-app.get("/getallbikes", middleware, (req,res)=>{
+app.get("/getallbikes", (req,res)=>{
     res.json(bikes_db)
     // res.sendFile("index.html")
 })
 
-app.get("/home", middleware, (req,res)=>{
+app.get("/home", (req,res)=>{
     res.send("Hello from your first server")
     // res.sendFile("index.html")
 })
 
-app.post("/bikeaction", middleware, (req, res)=>{
+app.post("/bikeaction", (req, res)=>{
     console.log(req.body)
     //database logic
     bikes_db.push(req.body)
