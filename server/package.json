@@ -7,6 +7,6 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js && 'cd frontend_bike npm run start'"
+    "start": "node index.js && 'cd frontend_bike npm run start'"
   }
 }
